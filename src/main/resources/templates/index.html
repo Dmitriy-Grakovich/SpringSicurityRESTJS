@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>Users</title>
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
+<div th:each="user : ${users}">
+    <form th:method="DELETE" th:action="@{/admin/user/{id}(id=${user.getId()})}">
 
 
+        <a th:href="@{/admin/user/{id}(id=${user.getId})}" th:text="${user.getName}">User</a>
+        <p th:text="${user.getAge}">User</p>
+        <p th:text="${user.getLastName}">User</p>
+        <div th:each="role : ${user.getRoles()}" >
+            <p th:text="${role.getName()}">Role</p>
+        </div>
+
+
+
+        <input type="submit" value="Delete"/>
+    </form>
+</div>
+
+<br>
+<b/>
+<form method="get" action="/admin/new">
+    <input type="submit" value="add new User">
+</form>
+<b/>
+
+<form method="get" action="/logout">
+    <input type="submit" value="выход">
+</form>
 </body>
 </html>
