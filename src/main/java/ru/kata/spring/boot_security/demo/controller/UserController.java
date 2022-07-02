@@ -7,12 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.forms.UserForms;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -32,10 +28,11 @@ public class UserController {
         model.addAttribute("users", users);
         return "index";
     }
+
     @GetMapping("/user")
-    public String userPage(Principal principal, Model model){
+    public String userPage(Principal principal, Model model) {
         User user = userService.getUserByName(principal.getName());
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "user";
     }
 

@@ -21,7 +21,7 @@ import java.util.Collection;
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
 
     private String password;
@@ -41,8 +41,8 @@ public class User {
     @Max(value = 130, message = "<130")
     private Integer age;
 
-    @ManyToMany
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn (name = "user_id"), inverseJoinColumns =
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =
     @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
@@ -51,7 +51,37 @@ public class User {
         return id + " | " + name + " | " + lastName + " | " + age + " |";
     }
 
-    public void addRole(Role role){
+    public void addRole(Role role) {
         roles.add(role);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return getName();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

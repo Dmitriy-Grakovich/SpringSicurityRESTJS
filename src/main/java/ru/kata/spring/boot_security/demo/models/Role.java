@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.asm.MemberSubstitution;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,8 +26,13 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
-    public void addUser(User user){
+    public void addUser(User user) {
         this.users.add(user);
         user.addRole(this);
+    }
+
+    @Override
+    public String getAuthority() {
+        return getName();
     }
 }
