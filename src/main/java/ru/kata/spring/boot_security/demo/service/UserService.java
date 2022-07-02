@@ -17,6 +17,7 @@ public interface UserService {
     void update(Long id, String name, String lastName, Integer age);
 
     void delete(Long id);
+
     User getUserByName(String name);
 
     void save(UserForms userForms);

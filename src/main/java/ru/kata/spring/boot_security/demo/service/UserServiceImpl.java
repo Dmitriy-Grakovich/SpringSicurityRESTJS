@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
       User newUser = null;
       Role role = roleRepository.getRoleByName("ROLE_USER");
 
-      if( newUser == null) {
+      if (newUser == null) {
          newUser = User.builder()
                  .age(userForms.getAge())
                  .lastName(userForms.getLastName())
@@ -83,12 +83,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    @Transactional
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       User user = userRepository.findByName(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-      return new org.springframework.security.core.userdetails.User(user.getName(),user.getPassword(),mapToRoles(user.getRoles()));
-
+      return user;
    }
-
-   private Collection<? extends GrantedAuthority> mapToRoles(Collection<Role> roles){
-      return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-   }
-
 }
