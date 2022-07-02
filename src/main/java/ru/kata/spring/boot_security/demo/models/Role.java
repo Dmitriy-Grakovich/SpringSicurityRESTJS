@@ -32,6 +32,4 @@ public class Role {
         this.users.add(user);
         user.addRole(this);
     }
-
-
 }

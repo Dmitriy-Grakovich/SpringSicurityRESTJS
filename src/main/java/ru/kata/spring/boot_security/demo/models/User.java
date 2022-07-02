@@ -14,9 +14,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -57,5 +54,4 @@ public class User {
     public void addRole(Role role){
         roles.add(role);
     }
-
 }
