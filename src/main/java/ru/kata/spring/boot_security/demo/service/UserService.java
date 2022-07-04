@@ -3,8 +3,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 
-import ru.kata.spring.boot_security.demo.forms.UserForms;
-import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.forms.UserDTO;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.List;
@@ -20,5 +19,7 @@ public interface UserService {
 
     User getUserByName(String name);
 
-    void save(UserForms userForms);
+    void save(UserDTO userDTO);
+
+    User getUserByEmail(String name);
 }

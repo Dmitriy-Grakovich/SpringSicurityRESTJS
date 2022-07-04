@@ -34,6 +34,10 @@ public class User implements UserDetails {
     private String name;
 
     @NotEmpty(message = "Not null")
+    @Size(min = 2, max = 50, message = "")
+    private String email;
+
+    @NotEmpty(message = "Not null")
     @Size(min = 2, max = 30, message = "")
     private String lastName;
 
@@ -41,7 +45,7 @@ public class User implements UserDetails {
     @Max(value = 130, message = "<130")
     private Integer age;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =
     @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
@@ -62,7 +66,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getName();
+        return getEmail();
     }
 
     @Override

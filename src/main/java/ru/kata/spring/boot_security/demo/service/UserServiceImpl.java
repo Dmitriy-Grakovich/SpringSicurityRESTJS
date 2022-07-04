@@ -1,25 +1,21 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.forms.UserForms;
+import ru.kata.spring.boot_security.demo.forms.UserDTO;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -62,16 +58,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    }
 
    @Override
-   public void save(UserForms userForms) {
+   public void save(UserDTO userDTO) {
       User newUser = null;
-      Role role = roleRepository.getRoleByName("ROLE_USER");
+      Role role = roleRepository.getRoleByName("USER");
 
       if (newUser == null) {
          newUser = User.builder()
-                 .age(userForms.getAge())
-                 .lastName(userForms.getLastName())
-                 .name(userForms.getName())
-                 .password(passwordEncoder.encode(userForms.getPassword()))
+                 .age(userDTO.getAge())
+                 .lastName(userDTO.getLastName())
+                 .name(userDTO.getName())
+                 .password(passwordEncoder.encode(userDTO.getPassword()))
+                 .email(userDTO.getEmail())
                  .roles(new HashSet<>())
                  .build();
       }
@@ -80,9 +77,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    }
 
    @Override
-   @Transactional
+   @Transactional(readOnly = true)
+   public User getUserByEmail(String name) {
+      return userRepository.findByEmail(name).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+   }
+
+   @Override
+   @Transactional(readOnly = true)
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      User user = userRepository.findByName(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+      User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
       return user;
    }
 }

@@ -3,10 +3,11 @@ package ru.kata.spring.boot_security.demo.forms;
 import lombok.Data;
 
 @Data
-public class UserForms {
+public class UserDTO {
     private Long id;
     private String name;
     private String lastName;
+    private String email;
     private Integer age;
     private String password;
 }
