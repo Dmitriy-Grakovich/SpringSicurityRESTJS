@@ -54,13 +54,6 @@ public class UserController {
         return "redirect:/admin";
     }
 
-//    @GetMapping("admin/user/{id}")
-//    public String  show(@PathVariable("id") Long id, Model model) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        return "user";
-//    }
-
-
     @PostMapping("/{id}")
     public String update(UserDTO userDTO, BindingResult bindingResult, @RequestParam("role") String role) {
         userService.update(userDTO, role);
