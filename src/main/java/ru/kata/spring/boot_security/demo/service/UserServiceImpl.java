@@ -39,17 +39,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    }
 
    @Override
-   public void update(Long id, String name, String lastName, Integer age) {
-      User user = userRepository.findById(id).orElseThrow();
-      user.setAge(age);
-      user.setName(name);
-      user.setLastName(lastName);
+   public void update(UserDTO userDTO, String roleUser) {
+      User user = userRepository.findById(userDTO.getId()).orElseThrow();
+      user.setAge(userDTO.getAge());
+      user.setName(userDTO.getName());
+      user.setLastName(userDTO.getLastName());
+      user.setEmail(userDTO.getEmail());
+      if(userDTO.getPassword()!=null) {
+         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+      }
+      Role role = roleRepository.getRoleByName(roleUser);
+         user.getRoles().clear();
+         user.addRole(role);
+
       userRepository.save(user);
    }
 
    @Override
    public void delete(Long id) {
-      userRepository.delete(getUserById(id));
+      User user = userRepository.findById(id).orElseThrow();
+      user.getRoles().clear();
+      userRepository.save(user);
+      userRepository.delete(user);
    }
 
    @Override
@@ -58,11 +69,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    }
 
    @Override
-   public void save(UserDTO userDTO) {
+   public void save(UserDTO userDTO, String roleName) {
       User newUser = null;
-      Role role = roleRepository.getRoleByName("USER");
+      Role role = roleRepository.getRoleByName(roleName);
 
-      if (newUser == null) {
+      if (newUser == null && userDTO.getAge()!=null && userDTO.getLastName()!=null && userDTO.getName()!=null && userDTO.getPassword()!=null && userDTO.getEmail()!=null) {
          newUser = User.builder()
                  .age(userDTO.getAge())
                  .lastName(userDTO.getLastName())

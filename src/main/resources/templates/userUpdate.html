@@ -5,16 +5,15 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}">
-    <label for="name">Enter name: </label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <label for="lastName">Enter name: </label>
-    <input type="text" th:field="*{lastName}" id="lastName"/>
-    <label for="age">Enter name: </label>
+<form th:method="POST" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" style="text-align: center">
+    <label for="name" >Enter name: </label><br>
+    <input type="text" th:field="*{name}" id="name"/><br>
+    <label for="lastName">Enter name: </label><br>
+    <input type="text" th:field="*{lastName}" id="lastName"/><br>
+    <label for="age">Enter name: </label><br>
     <input type="text" th:field="*{age}" id="age"/>
     <br/>
     <input type="submit" value="Update!"/>
 </form>
-<b>h2</b>
 </body>
 </html>

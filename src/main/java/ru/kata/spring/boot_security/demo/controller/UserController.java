@@ -24,16 +24,19 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    public String index(Model model) {
+    public String index(Principal principal, Model model) {
+        User userAdmin = userService.getUserByEmail(principal.getName());
         List<User> users = userService.allUser();
+        model.addAttribute("userAdmin", userAdmin);
         model.addAttribute("users", users);
+
         return "index";
     }
 
     @GetMapping("/user")
     public String userPage(Principal principal, Model model) {
         User user = userService.getUserByEmail(principal.getName());
-        model.addAttribute("user", user);
+        model.addAttribute("userUser", user);
         return "user";
     }
 
@@ -43,31 +46,31 @@ public class UserController {
     }
 
     @PostMapping("/admin")
-    public String creatUser(UserDTO userDTO, BindingResult bindingResult) {
+    public String creatUser(UserDTO userDTO, BindingResult bindingResult, @RequestParam("role") String role) {
         if (bindingResult.hasErrors()) {
             return "newUser";
         }
-        userService.save(userDTO);
+        userService.save(userDTO, role);
         return "redirect:/admin";
     }
 
-    @GetMapping("admin/user/{id}")
-    public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "userUpdate";
-    }
+//    @GetMapping("admin/user/{id}")
+//    public String  show(@PathVariable("id") Long id, Model model) {
+//        model.addAttribute("user", userService.getUserById(id));
+//        return "user";
+//    }
 
 
     @PostMapping("/{id}")
-    public String update(@PathVariable("id") Long id, @RequestParam("name") String name,
-                         @RequestParam("lastName") String lastName, @RequestParam("age") Integer age) {
-        userService.update(id, name, lastName, age);
+    public String update(UserDTO userDTO, BindingResult bindingResult, @RequestParam("role") String role) {
+        userService.update(userDTO, role);
         return "redirect:/admin";
     }
 
     @PostMapping("/admin/user/{id}")
-    public String deleteUser(@PathVariable("id") Long Id) {
-        userService.delete(Id);
+    public String deleteUser(@RequestParam("userId") String Id) {
+
+        userService.delete(Long.parseLong(Id));
         return "redirect:/admin";
     }
 }

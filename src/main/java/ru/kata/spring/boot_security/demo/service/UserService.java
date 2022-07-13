@@ -13,13 +13,13 @@ public interface UserService {
 
     User getUserById(long id);
 
-    void update(Long id, String name, String lastName, Integer age);
+    void update(UserDTO userDTO, String roleUser);
 
     void delete(Long id);
 
     User getUserByName(String name);
 
-    void save(UserDTO userDTO);
+    void save(UserDTO userDTO, String role);
 
     User getUserByEmail(String name);
 }
