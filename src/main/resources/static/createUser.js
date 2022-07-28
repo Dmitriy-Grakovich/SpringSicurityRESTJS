@@ -1,15 +1,13 @@
 async function createUser() {
     const buttAddNewUser = $('#addNewUser')
 
-    buttAddNewUser.click(async function (){
-        let addUserForm = $('#newUserForm')
-
+    buttAddNewUser.click(async function () {
         let firstName = document.querySelector('#firstName')
         let lastName = document.querySelector('#lastName')
         let age = document.querySelector('#age')
         let email = document.querySelector('#email')
-        let password =  document.querySelector('#password')
-        let role =  document.querySelector('#role')
+        let password = document.querySelector('#password')
+        let role = document.querySelector('#role')
 
         let userDTO = {
             name: firstName.value,
@@ -22,17 +20,17 @@ async function createUser() {
 
         let response = await userFetch.addNewUser(userDTO)
 
-        if(response.ok){
+        if (response.ok) {
             await allUsers()
-            firstName.value=''
-            lastName.value =''
+            firstName.value = ''
+            lastName.value = ''
             age.value = ''
-            email.value=''
-            password.value=''
+            email.value = ''
+            password.value = ''
             $('.nav-tabs a[href="#tab1"]').tab('show');
 
         } else {
-            alert("нас постигла неудача");}
+            alert("нас постигла неудача");
+        }
     })
-
 }

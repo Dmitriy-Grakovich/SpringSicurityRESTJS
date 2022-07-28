@@ -45,13 +45,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
       user.setName(userDTO.getName());
       user.setLastName(userDTO.getLastName());
       user.setEmail(userDTO.getEmail());
-      if(userDTO.getPassword()!=""){
-          user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+      if (userDTO.getPassword().equals("")){
+         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
       }
       Role role = roleRepository.getRoleByName(userDTO.getRole());
-         user.getRoles().clear();
-         user.addRole(role);
-
+      user.getRoles().clear();
+      user.addRole(role);
       userRepository.save(user);
    }
 
@@ -64,16 +63,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    }
 
    @Override
-   public User getUserByName(String name) {
-      return userRepository.findByName(name).orElseThrow(IllegalArgumentException::new);
-   }
-
-   @Override
    public void save(UserDTO userDTO) {
       User newUser = null;
       Role role = roleRepository.getRoleByName(userDTO.getRole());
 
-      if (newUser == null && userDTO.getAge()!=null && userDTO.getLastName()!=null && userDTO.getName()!=null && userDTO.getPassword()!=null && userDTO.getEmail()!=null) {
+      if (newUser == null && userDTO.getAge() != null && userDTO.getLastName() != null && userDTO.getName() != null && userDTO.getPassword() != null && userDTO.getEmail() != null) {
          newUser = User.builder()
                  .age(userDTO.getAge())
                  .lastName(userDTO.getLastName())

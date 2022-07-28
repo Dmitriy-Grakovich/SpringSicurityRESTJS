@@ -1,4 +1,3 @@
-
 async function inAccount() {
 
     let accountEmail = document.querySelector('#emailAccount')
@@ -7,9 +6,9 @@ async function inAccount() {
     let userEmail = account.email
     let userRole = account['roles'].map(e => " " + e.name)
     accountEmail.innerHTML = userEmail
-    accountRoles.innerHTML =  userRole
+    accountRoles.innerHTML = userRole
     let userId = document.querySelector('#UserId')
-    if (userId!=null) {
+    if (userId != null) {
         userId.innerHTML = account.id
         let userName = document.querySelector('#UserName')
         let userLastName = document.querySelector('#UserLastName')

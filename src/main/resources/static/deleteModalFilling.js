@@ -1,8 +1,5 @@
 $('#exampleModalDelete').on('show.bs.modal', function (event) {
     const button = $(event.relatedTarget) // Button that triggered the modal
-    // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
     let modal = $(this)
     let id = button.data('id')
     modal.find('[name="userId"]').val(id)

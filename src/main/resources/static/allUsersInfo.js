@@ -4,7 +4,7 @@ async function allUsers() {
     let users = await (await userFetch.findAllUsers()).json()
     users.forEach(user => {
 
-        html +=`<tr>
+        html += `<tr>
                         <td>${user.id}</td>
                         <td>${user.name}</td>
                         <td>${user.lastName}</td>

@@ -1,8 +1,5 @@
 package ru.kata.spring.boot_security.demo.service;
 
-
-
-
 import ru.kata.spring.boot_security.demo.forms.UserDTO;
 import ru.kata.spring.boot_security.demo.models.User;
 
@@ -16,8 +13,6 @@ public interface UserService {
     void update(UserDTO userDTO);
 
     void delete(Long id);
-
-    User getUserByName(String name);
 
     void save(UserDTO userDTO);
 
