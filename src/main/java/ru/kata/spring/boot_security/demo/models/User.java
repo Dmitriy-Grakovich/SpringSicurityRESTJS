@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +36,7 @@ public class User implements UserDetails {
 
     @NotEmpty(message = "Not null")
     @Size(min = 2, max = 50, message = "")
+    @Column(unique = true)
     private String email;
 
     @NotEmpty(message = "Not null")
@@ -48,6 +50,7 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =
     @JoinColumn(name = "role_id"))
+    @JsonManagedReference
     private Collection<Role> roles;
 
     @Override

@@ -11,11 +11,9 @@
 </head>
 <body>
 <div class="alert bg-dark" role="alert">
-    <strong> <span th:text="${userUser.getEmail()}" style="color: aliceblue">Email</span></strong>
+    <strong><span style="color: aliceblue" id ="emailAccount">Email</span></strong>
     <span style="color: aliceblue">with roles:</span>
-    <span th:each="role : ${userUser.getRoles()}" style="color: aliceblue">
-        <span th:text="${role.getName()}">Role</span>
-    </span>
+    <span id="roleAccount" style="color: aliceblue">Role</span>
     <a th:href="@{/logout}" th:text="Logout" style="float: right; color: darkgray">Logout</a>
 </div>
 
@@ -62,29 +60,14 @@
 
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tBodyUser">
                                 <tr>
-                                    <td th:text="${userUser.getId()}">
-                                        ID
-                                    </td>
-                                    <td th:text="${userUser.getName()}">
-                                        First Name
-                                    </td>
-                                    <td th:text="${userUser.getLastName()}">
-                                        Last Name
-                                    </td>
-                                    <td th:text="${userUser.getAge()}">
-                                        Age
-                                    </td>
-                                    <td th:text="${userUser.getEmail()}">
-                                        Email
-                                    </td>
-                                    <td>
-                                            <span th:each="role : ${userUser.getRoles()}">
-                                            <span th:text="${role.getName()}"> Role</span>
-                                            </span>
-                                    </td>
-
+                                    <td id="UserId">id</td>
+                                    <td id="UserName">name</td>
+                                    <td id="UserLastName">ln</td>
+                                    <td id="UserAge">age</td>
+                                    <td id="UserEmail">email</td>
+                                    <td id="UserRole">role</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -95,6 +78,11 @@
         </div>
     </div>
 </div>
-
-
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="/main.js"></script>
+<script src="/accountInfo.js"></script>
+<script src="/userInfo.js"></script>
+</body>
+</html>

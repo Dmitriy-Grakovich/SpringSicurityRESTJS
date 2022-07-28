@@ -39,16 +39,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    }
 
    @Override
-   public void update(UserDTO userDTO, String roleUser) {
+   public void update(UserDTO userDTO) {
       User user = userRepository.findById(userDTO.getId()).orElseThrow();
       user.setAge(userDTO.getAge());
       user.setName(userDTO.getName());
       user.setLastName(userDTO.getLastName());
       user.setEmail(userDTO.getEmail());
-      if(userDTO.getPassword()!=null) {
-         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+      if(userDTO.getPassword()!=""){
+          user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
       }
-      Role role = roleRepository.getRoleByName(roleUser);
+      Role role = roleRepository.getRoleByName(userDTO.getRole());
          user.getRoles().clear();
          user.addRole(role);
 
@@ -69,9 +69,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    }
 
    @Override
-   public void save(UserDTO userDTO, String roleName) {
+   public void save(UserDTO userDTO) {
       User newUser = null;
-      Role role = roleRepository.getRoleByName(roleName);
+      Role role = roleRepository.getRoleByName(userDTO.getRole());
 
       if (newUser == null && userDTO.getAge()!=null && userDTO.getLastName()!=null && userDTO.getName()!=null && userDTO.getPassword()!=null && userDTO.getEmail()!=null) {
          newUser = User.builder()
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    @Override
    @Transactional(readOnly = true)
    public User getUserByEmail(String name) {
-      return userRepository.findByEmail(name).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+      return userRepository.findByEmail(name).orElseThrow(() -> new IllegalArgumentException("User not found"));
    }
 
    @Override

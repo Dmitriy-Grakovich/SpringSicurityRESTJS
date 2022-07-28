@@ -25,15 +25,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/user").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .and().csrf().disable();
     }
-
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
